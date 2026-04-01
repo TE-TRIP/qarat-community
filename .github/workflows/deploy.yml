@@ -29,9 +29,8 @@ jobs:
       - run: pnpm vite build --config vite.config.github.ts
         env:
           BASE_URL: /qarat-community/
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
           path: dist/public
 
   deploy:
@@ -41,13 +40,5 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: .
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
       - uses: actions/deploy-pages@v4
         id: deployment
