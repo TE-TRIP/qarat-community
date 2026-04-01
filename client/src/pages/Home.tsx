@@ -239,7 +239,7 @@ function EventCard({ event, index }: { event: typeof EVENTS[0]; index: number })
         </div>
 
         <Link
-          href={`/events/${event.id}`}
+          href={`/qarat-community/events/${event.id}`}
           className="inline-flex items-center gap-1 text-sm font-medium transition-colors duration-200"
           style={{ color: "oklch(0.62 0.17 45)", fontFamily: "'Noto Sans JP', sans-serif" }}
         >
