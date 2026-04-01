@@ -20,7 +20,7 @@ function Router() {
     <>
       <Navbar />
       <Switch>
-        <Route path="/" component={Home} />
+        <Route path="/qarat-community" component={Home} />
         <Route path="/events/:id" component={EventDetail} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
