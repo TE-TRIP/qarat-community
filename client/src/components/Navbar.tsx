@@ -9,12 +9,12 @@ import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
-  { href: "/", label: "ホーム" },
-  { href: "/events/secret-cafe", label: "シークレットカフェ" },
-  { href: "/events/gym", label: "合同筋トレ" },
-  { href: "/events/run", label: "合同ラン" },
-  { href: "/events/nail", label: "ネイルサロン" },
-  { href: "/events/esthe", label: "エステ" },
+  { href: "/qarat-community", label: "ホーム" },
+  { href: "/qarat-community/events/secret-cafe", label: "シークレットカフェ" },
+  { href: "/qarat-community/events/gym", label: "合同筋トレ" },
+  { href: "/qarat-community/events/run", label: "合同ラン" },
+  { href: "/qarat-community/events/nail", label: "ネイルサロン" },
+  { href: "/qarat-community/events/esthe", label: "エステ" },
 ];
 
 export default function Navbar() {
