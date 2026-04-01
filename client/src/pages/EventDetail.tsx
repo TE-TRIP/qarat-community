@@ -54,7 +54,7 @@ export default function EventDetail() {
           <p className="text-stone-400 mb-4" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
             イベントが見つかりませんでした
           </p>
-          <Link href="/" className="btn-qarat-primary">
+          <Link href="/qarat-community" className="btn-qarat-primary">
             トップページへ
           </Link>
         </div>
@@ -106,7 +106,7 @@ function EventHero({ event }: { event: typeof EVENTS[0] }) {
       <div className="container relative z-10 pb-10 lg:pb-14">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 mb-6 text-xs text-stone-300" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
-          <Link href="/" className="hover:text-white transition-colors">ホーム</Link>
+          <Link href="/qarat-community" className="hover:text-white transition-colors">ホーム</Link>
           <ChevronRight size={12} />
           <span className="text-white">{event.title}</span>
         </nav>
@@ -154,7 +154,7 @@ function EventContent({ event }: { event: typeof EVENTS[0] }) {
           <div className="lg:col-span-2 space-y-8">
             {/* Back link */}
             <Link
-              href="/"
+              href="/qarat-community"
               className="inline-flex items-center gap-2 text-sm text-stone-500 hover:text-orange-600 transition-colors duration-200"
               style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
             >
@@ -382,7 +382,7 @@ function OtherEvents({ events }: { events: typeof EVENTS }) {
             {events.map((event) => (
               <Link
                 key={event.id}
-                href={`/events/${event.id}`}
+                href={`/qarat-community/events/${event.id}`}
                 className="qarat-card group block"
               >
                 <div className="relative h-40 overflow-hidden">
