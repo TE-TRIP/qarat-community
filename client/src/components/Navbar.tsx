@@ -15,6 +15,7 @@ const NAV_LINKS = [
   { href: "/qarat-community/events/run", label: "合同ラン" },
   { href: "/qarat-community/events/nail", label: "ネイルサロン" },
   { href: "/qarat-community/events/esthe", label: "エステ" },
+  { href: "/qarat-community/events/art-talk", label: "アート&トーク" },
 ];
 
 export default function Navbar() {
