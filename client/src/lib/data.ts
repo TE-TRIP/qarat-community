@@ -127,6 +127,26 @@ export const EVENTS: Event[] = [
     fee: "施術料金は別途ご案内",
     formUrl: "https://forms.google.com",
     color: "from-purple-50 to-violet-50"
+  },
+  {
+    id: "art-talk",
+    title: "アート&トーク",
+    subtitle: "Art & Talk",
+    description: "イラストやアート好きな人が集まって、お喋りをしながら絵を描くイベント。創作の時間と交流を同時に楽しめます。",
+    longDescription: "イラストやアート好きな社会人が集まり、自由に絵を描きながらお喋りを楽しむイベントです。初心者から経験者まで、自分のペースで創作活動ができます。同じ価値観を持つアート好きな仲間と出会い、創作のモチベーションを高め合える特別な時間です。",
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663498366223/FXniwgiv9AQiRJmEoGcM6D/event-art-talk-DbMQiVtFbgLZfcrF5m3Ch4.webp",
+    category: "クリエイティブ",
+    highlights: [
+      "初心者〜経験者対応",
+      "自由な創作活動",
+      "アート好きな仲間と交流",
+      "リラックスした雰囲気"
+    ],
+    schedule: "月1〜2回（週末）",
+    capacity: "6〜12名",
+    fee: "参加費は各回ご案内",
+    formUrl: "https://forms.google.com",
+    color: "from-indigo-50 to-blue-50"
   }
 ];
 
@@ -171,5 +191,6 @@ export const NOTICES: Notice[] = [
 export const EVENT_CATEGORY_COLORS: Record<string, string> = {
   "交流": "bg-orange-100 text-orange-700",
   "フィットネス": "bg-green-100 text-green-700",
-  "ビューティー": "bg-pink-100 text-pink-700"
+  "ビューティー": "bg-pink-100 text-pink-700",
+  "クリエイティブ": "bg-indigo-100 text-indigo-700"
 };
