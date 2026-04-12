@@ -207,7 +207,7 @@ function AboutSection() {
           {/* Right: Image */}
           <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-lg">
             <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663498366223/FXniwgiv9AQiRJmEoGcM6D/event-secret-cafe-F6AR7vKxZ37jF3Lja9ZFSN.webp"
+              src="https://raw.githubusercontent.com/TE-TRIP/qarat-community/main/assets/images/20250817-034A8959.jpg"
               alt="QARATコミュニティの様子"
               className="w-full h-full object-cover"
             />

@@ -34,7 +34,7 @@ export const EVENTS: Event[] = [
     subtitle: "Secret Café",
     description: "非公開の特別空間で、上質なひとときを。厳選されたメンバーだけが集う、特別なカフェイベントです。",
     longDescription: "QARATが厳選した非公開のカフェ・レストランを会場に、社会人同士が自然体で交流できる特別なイベントです。美味しいドリンクや軽食を楽しみながら、同じ価値観を持つ仲間と出会えます。会場は毎回異なり、その都度サプライズな空間をご用意しています。",
-    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663498366223/FXniwgiv9AQiRJmEoGcM6D/event-secret-cafe-fbfiaqNuE8ZBfLAthNHQsL.webp",
+    image: "https://raw.githubusercontent.com/TE-TRIP/qarat-community/main/assets/images/20250817-034A8959.jpg",
     category: "交流",
     highlights: [
       "非公開の厳選会場",
