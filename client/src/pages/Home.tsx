@@ -195,7 +195,7 @@ export default function Home() {
             {EVENTS.map((event, idx) => (
               <a
                 key={event.id}
-                href={`/qarat-community/events/${event.id}`}
+                href={`/events/${event.id}`}
                 className={`group block transition-all duration-1000 ${
                   inView.events
                     ? "opacity-100 translate-y-0"

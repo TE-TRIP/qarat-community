@@ -9,12 +9,12 @@ import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
-  { href: "/qarat-community", label: "ホーム" },
-  { href: "/qarat-community/events/secret-cafe", label: "シークレットカフェ" },
-  { href: "/qarat-community/events/gym", label: "合同筋トレ" },
-  { href: "/qarat-community/events/run", label: "合同ラン" },
-  { href: "/qarat-community/events/nail", label: "ネイルサロン" },
-  { href: "/qarat-community/events/esthe", label: "エステ" },
+  { href: "/", label: "ホーム" },
+  { href: "/events/secret-cafe", label: "シークレットカフェ" },
+  { href: "/events/gym", label: "合同筋トレ" },
+  { href: "/events/run", label: "合同ラン" },
+  { href: "/events/nail", label: "ネイルサロン" },
+  { href: "/events/esthe", label: "エステ" },
 ];
 
 export default function Navbar() {
@@ -45,7 +45,7 @@ export default function Navbar() {
       <div className="container">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/qarat-community/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2 group">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-sm flex items-center justify-center" style={{ background: "oklch(0.62 0.17 45)" }}>
                 <span className="text-white font-bold text-sm" style={{ fontFamily: "'Playfair Display', serif" }}>Q</span>
