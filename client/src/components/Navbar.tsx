@@ -45,7 +45,7 @@ export default function Navbar() {
       <div className="container">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/qarat-community/" className="flex items-center gap-2 group">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-sm flex items-center justify-center" style={{ background: "oklch(0.62 0.17 45)" }}>
                 <span className="text-white font-bold text-sm" style={{ fontFamily: "'Playfair Display', serif" }}>Q</span>
