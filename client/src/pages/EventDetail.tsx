@@ -74,6 +74,7 @@ export default function EventDetail() {
       <EventHero event={event} />
       <EventContent event={event} />
       <ApplicationCTA event={event} />
+      <MemberRecommendation />
       <OtherEvents events={otherEvents} />
     </div>
   );
@@ -324,6 +325,51 @@ function ApplicationCTA({ event }: { event: typeof EVENTS[0] }) {
   );
 }
 
+// ─── Member Recommendation ──────────────────────────────────────────────────────
+function MemberRecommendation() {
+  return (
+    <section className="py-16 md:py-24 bg-white">
+      <div className="container">
+        <h2
+          className="text-3xl md:text-4xl font-bold mb-6"
+          style={{
+            fontFamily: "'Noto Serif JP', serif",
+            color: "oklch(0.22 0.02 50)"
+          }}
+        >
+          このイベントに関連するメンバー
+        </h2>
+        <p
+          className="text-base md:text-lg text-stone-600 mb-8"
+          style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
+        >
+          イベント主催者や関連する専門家をご紹介します。サービスのご利用やご相談はお気軽にお問い合わせください。
+        </p>
+        <div className="bg-neutral-50 rounded-lg p-8 text-center">
+          <p
+            className="text-muted-foreground mb-6"
+            style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
+          >
+            ホームページでメンバー一覧をご確認いただけます
+          </p>
+          <Link
+            href="/qarat-community"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200"
+            style={{
+              background: "oklch(0.62 0.17 45)",
+              color: "white",
+              fontFamily: "'Noto Sans JP', sans-serif"
+            }}
+          >
+            メンバー一覧を見る
+            <ChevronRight size={18} />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── Other Events ─────────────────────────────────────────────────────────────
 function OtherEvents({ events }: { events: typeof EVENTS }) {
   const { ref, inView } = useInView();
@@ -342,7 +388,7 @@ function OtherEvents({ events }: { events: typeof EVENTS }) {
             color: "oklch(0.22 0.02 50)"
           }}
         >
-          他のイベント
+          関連するイベント
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

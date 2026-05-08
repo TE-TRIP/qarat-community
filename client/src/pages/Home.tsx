@@ -1,478 +1,323 @@
-// ==========================================================================
-// QARAT Community - Home Page (Redesigned)
-// Design: Refined Warmth × Asymmetric Modern
-// Left Text + Right Image layout with responsive design
-// ==========================================================================
-
 import { useEffect, useRef, useState } from "react";
-import { Link } from "wouter";
-import { ArrowRight, ChevronRight, Calendar, Users } from "lucide-react";
-import { EVENTS, NOTICES, EVENT_CATEGORY_COLORS } from "@/lib/data";
+import { EVENTS, MEMBERS, NOTICES } from "@/lib/data";
+import MemberCard from "@/components/MemberCard";
 
-// Intersection Observer hook for scroll animations
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function useInView(threshold = 0.15) {
-  const ref = useRef<any>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [threshold]);
-
-  return { ref, inView };
+interface InViewState {
+  [key: string]: boolean;
 }
 
 export default function Home() {
+  const [inView, setInView] = useState<InViewState>({});
+  const heroRef = useRef<any>(null);
+  const aboutRef = useRef<any>(null);
+  const membersRef = useRef<any>(null);
+  const eventsRef = useRef<any>(null);
+  const newsRef = useRef<any>(null);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setInView((prev) => ({
+            ...prev,
+            [entry.target.id]: true
+          }));
+        }
+      });
+    }, observerOptions);
+
+    [heroRef, aboutRef, membersRef, eventsRef, newsRef].forEach((ref) => {
+      if (ref.current) observer.observe(ref.current);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
-      <HeroSection />
-      <AboutSection />
-      <EventCategoriesSection />
-      <DetailSection />
-      <NoticesSection />
-    </div>
-  );
-}
-
-// ─── Hero Section ─────────────────────────────────────────────────────────────
-function HeroSection() {
-  return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-16 lg:pt-20 bg-white">
-      <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left: Text Content */}
-          <div className="flex flex-col justify-center order-2 lg:order-1">
-            {/* Eyebrow */}
-            <div
-              className="inline-flex items-center gap-2 mb-4 w-fit animate-fade-in-up"
-              style={{ opacity: 0, animationFillMode: "forwards" }}
-            >
-              <span
-                className="text-xs font-semibold tracking-[0.2em] uppercase px-3 py-1.5 rounded-full"
-                style={{
-                  background: "oklch(0.97 0.01 80)",
-                  color: "oklch(0.62 0.17 45)",
-                  fontFamily: "'Noto Sans JP', sans-serif"
-                }}
-              >
-                社会人コミュニティ
-              </span>
-            </div>
-
-            {/* Main Heading */}
-            <h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 animate-fade-in-up animate-delay-100"
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                color: "oklch(0.22 0.02 50)",
-                opacity: 0,
-                animationFillMode: "forwards"
-              }}
-            >
-              QARAT
-            </h1>
-
-            {/* Subheading */}
-            <p
-              className="text-lg md:text-xl lg:text-2xl font-medium mb-6 animate-fade-in-up animate-delay-200"
-              style={{
-                fontFamily: "'Noto Serif JP', serif",
-                color: "oklch(0.38 0.08 50)",
-                opacity: 0,
-                animationFillMode: "forwards"
-              }}
-            >
-              上質な出会いと体験を、<br />
-              あなたの日常に。
-            </p>
-
-            {/* Description */}
-            <p
-              className="text-sm md:text-base text-stone-600 mb-8 leading-relaxed animate-fade-in-up animate-delay-300 max-w-md"
-              style={{
-                fontFamily: "'Noto Sans JP', sans-serif",
-                opacity: 0,
-                animationFillMode: "forwards"
-              }}
-            >
-              QARATは社会人のための上質なコミュニティです。シークレットカフェ、合同筋トレ、ランニング、ネイルサロン、エステなど多彩なイベントを通じて、価値観の合う仲間との出会いを実現します。
-            </p>
-
-            {/* CTA Buttons */}
-            <div
-              className="flex flex-col sm:flex-row gap-4 animate-fade-in-up animate-delay-400"
-              style={{
-                opacity: 0,
-                animationFillMode: "forwards"
-              }}
-            >
-              <Link
-                href="/qarat-community/events/secret-cafe"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg"
-                style={{
-                  background: "oklch(0.62 0.17 45)",
-                  color: "white",
-                  fontFamily: "'Noto Sans JP', sans-serif"
-                }}
-              >
-                イベントを見る
-                <ArrowRight size={18} />
-              </Link>
-              <Link
-                href="#notices"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200 border-2"
-                style={{
-                  borderColor: "oklch(0.62 0.17 45)",
-                  color: "oklch(0.62 0.17 45)",
-                  fontFamily: "'Noto Sans JP', sans-serif"
-                }}
-              >
-                お知らせ
-              </Link>
-            </div>
-          </div>
-
-          {/* Right: Image */}
-          <div className="relative h-96 md:h-[500px] lg:h-[600px] order-1 lg:order-2 rounded-lg overflow-hidden shadow-lg">
-            <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663498366223/FXniwgiv9AQiRJmEoGcM6D/hero-main-F6AR7vKxZ37jF3Lja9ZFSN.webp"
-              alt="QARATコミュニティ"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── About Section ────────────────────────────────────────────────────────────
-function AboutSection() {
-  const { ref, inView } = useInView();
-
-  return (
-    <section
-      ref={ref}
-      className={`py-16 md:py-24 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-      style={{ background: "oklch(0.97 0.01 80)" }}
-    >
-      <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left: Text */}
-          <div>
-            <h2
-              className="text-3xl md:text-4xl font-bold mb-4"
-              style={{
-                fontFamily: "'Noto Serif JP', serif",
-                color: "oklch(0.22 0.02 50)"
-              }}
-            >
-              QARATとは？
-            </h2>
-            <p
-              className="text-base md:text-lg text-stone-600 mb-6 leading-relaxed"
-              style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
-            >
-              忙しい社会人が「本当に楽しめる」時間を作るためのコミュニティです。厳選されたイベントと、価値観の合う仲間との出会いを通じて、日常に彩りを加えます。
-            </p>
-            <p
-              className="text-base md:text-lg text-stone-600 mb-8 leading-relaxed"
-              style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
-            >
-              各イベントは少人数制で、深い交流が実現します。上質な体験と、心地よい人間関係を大切にしています。
-            </p>
-            <Link
-              href="/qarat-community/events/secret-cafe"
-              className="inline-flex items-center gap-2 font-semibold transition-all duration-200"
-              style={{
-                color: "oklch(0.62 0.17 45)",
-                fontFamily: "'Noto Sans JP', sans-serif"
-              }}
-            >
-              詳しく見る
-              <ChevronRight size={18} />
-            </Link>
-          </div>
-
-          {/* Right: Image */}
-          <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-lg">
-            <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663498366223/FXniwgiv9AQiRJmEoGcM6D/event-secret-cafe-F6AR7vKxZ37jF3Lja9ZFSN.webp"
-              alt="QARATコミュニティの様子"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Event Categories Section ─────────────────────────────────────────────────
-function EventCategoriesSection() {
-  const { ref, inView } = useInView();
-
-  return (
-    <section ref={ref} className="py-16 md:py-24 bg-white">
-      <div className="container">
-        <div className="mb-12">
-          <p
-            className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
-            style={{ color: "oklch(0.62 0.17 45)", fontFamily: "'Noto Sans JP', sans-serif" }}
-          >
-            Events
-          </p>
-          <h2
-            className="text-3xl md:text-4xl font-bold mb-4"
-            style={{
-              fontFamily: "'Noto Serif JP', serif",
-              color: "oklch(0.22 0.02 50)"
-            }}
-          >
-            イベント一覧
-          </h2>
-          <p
-            className="text-base md:text-lg text-stone-600 max-w-2xl"
-            style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
-          >
-            QARATでは多彩なイベントを定期開催しています。気になるイベントをクリックして詳細をご確認ください。
-          </p>
-        </div>
-
-        {/* Event Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {EVENTS.map((event, index) => (
-            <EventCategoryCard
-              key={event.id}
-              event={event}
-              index={index}
-              inView={inView}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function EventCategoryCard({
-  event,
-  index,
-  inView
-}: {
-  event: typeof EVENTS[0];
-  index: number;
-  inView: boolean;
-}) {
-  return (
-    <Link
-      href={`/qarat-community/events/${event.id}`}
-      className={`group block transition-all duration-700 ${
-        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-      }`}
-      style={{ transitionDelay: `${index * 100}ms` }}
-    >
-      <div
-        className="relative h-64 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
+      {/* Hero Section */}
+      <section
+        ref={heroRef}
+        id="hero"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
-        <img
-          src={event.image}
-          alt={event.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-5">
-          <p
-            className="text-xs font-semibold tracking-widest mb-2 opacity-90"
-            style={{ color: "oklch(0.62 0.17 45)", fontFamily: "'Playfair Display', serif" }}
-          >
-            {event.subtitle}
-          </p>
-          <h3
-            className="text-xl md:text-2xl font-bold text-white mb-2"
-            style={{ fontFamily: "'Noto Serif JP', serif" }}
-          >
-            {event.title}
-          </h3>
-          <p
-            className="text-sm text-white/90 line-clamp-2"
-            style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
-          >
-            {event.description}
-          </p>
+        {/* Background Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url('https://d2xsxph8kpxj0f.cloudfront.net/310519663498366223/FXniwgiv9AQiRJmEoGcM6D/hero-main-fbfiaqNuE8ZBfLAthNHQsL.webp')`,
+            backgroundAttachment: "fixed"
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-black/40"></div>
         </div>
-      </div>
-    </Link>
-  );
-}
 
-// ─── Detail Section ────────────────────────────────────────────────────────────
-function DetailSection() {
-  const { ref, inView } = useInView();
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4 py-20">
+          <div className="max-w-2xl">
+            <h1 className={`text-5xl md:text-6xl font-serif font-bold text-white mb-6 transition-all duration-1000 ${
+              inView.hero ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}>
+              個性を活かした活動の場
+            </h1>
+            <p className={`text-xl md:text-2xl text-orange-200 mb-8 transition-all duration-1000 delay-200 ${
+              inView.hero ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}>
+              QARATコミュニティは、自分の強みを活かして活動する個人が集まるコミュニティです。
+            </p>
+            <div className={`flex gap-4 transition-all duration-1000 delay-300 ${
+              inView.hero ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}>
+              <a
+                href="#members"
+                className="px-8 py-3 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 transition-colors"
+              >
+                メンバーを見る
+              </a>
+              <a
+                href="#events"
+                className="px-8 py-3 bg-white/20 text-white rounded-lg font-medium hover:bg-white/30 transition-colors border border-white/30"
+              >
+                イベント一覧
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  return (
-    <section ref={ref} className="py-16 md:py-24 bg-white">
-      <div className="container">
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center transition-all duration-700 ${
-          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        }`}>
-          {/* Left: Text */}
-          <div>
-            <h2
-              className="text-3xl md:text-4xl font-bold mb-6"
-              style={{
-                fontFamily: "'Noto Serif JP', serif",
-                color: "oklch(0.22 0.02 50)"
-              }}
-            >
-              最高のコミュニティ体験
-            </h2>
-
-            <div className="space-y-6">
-              {[
-                {
-                  title: "厳選されたメンバー",
-                  desc: "価値観の合う社会人が集まるコミュニティ"
-                },
-                {
-                  title: "少人数制イベント",
-                  desc: "深い交流が実現する環境を大切にしています"
-                },
-                {
-                  title: "上質な体験",
-                  desc: "各イベントは厳選された会場と内容でご提供"
-                }
-              ].map((item, idx) => (
-                <div key={idx}>
-                  <h3
-                    className="text-lg font-bold mb-2"
-                    style={{
-                      color: "oklch(0.62 0.17 45)",
-                      fontFamily: "'Noto Serif JP', serif"
-                    }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p
-                    className="text-stone-600"
-                    style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
-                  >
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
+      {/* About Section */}
+      <section
+        ref={aboutRef}
+        id="about"
+        className="py-20 bg-gradient-to-b from-white to-orange-50"
+      >
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left: Text */}
+            <div className={`transition-all duration-1000 ${
+              inView.about ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+            }`}>
+              <div className="w-1 h-12 bg-orange-600 mb-6"></div>
+              <h2 className="text-4xl font-serif font-bold text-gray-900 mb-6">
+                QARATとは
+              </h2>
+              <p className="text-lg text-gray-700 mb-4">
+                QARATコミュニティは、社会人として活動する個人が、自分の専門分野や強みを活かして活動できるコミュニティです。
+              </p>
+              <p className="text-lg text-gray-700 mb-4">
+                フィットネスコーチ、イラストレーター、ネイリスト、カフェマネージャーなど、様々な分野で活動するメンバーが集まっています。
+              </p>
+              <p className="text-lg text-gray-700">
+                あなたの友人やお客さんを、QARATのメンバーに紹介し、その活動に繋げることができます。
+              </p>
             </div>
 
-            <Link
-              href="/qarat-community"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-200 mt-8"
-              style={{
-                background: "oklch(0.62 0.17 45)",
-                color: "white",
-                fontFamily: "'Noto Sans JP', sans-serif"
-              }}
-            >
-              イベントを見る
-              <ArrowRight size={18} />
-            </Link>
-          </div>
-
-          {/* Right: Image */}
-          <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-lg">
-            <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663498366223/FXniwgiv9AQiRJmEoGcM6D/event-gym-F6AR7vKxZ37jF3Lja9ZFSN.webp"
-              alt="コミュニティの様子"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Notices Section ──────────────────────────────────────────────────────────
-function NoticesSection() {
-  const { ref, inView } = useInView();
-
-  return (
-    <section
-      ref={ref}
-      id="notices"
-      className={`py-16 md:py-24 transition-all duration-700 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-      style={{ background: "oklch(0.97 0.01 80)" }}
-    >
-      <div className="container">
-        <div className="mb-12">
-          <p
-            className="text-xs font-semibold tracking-[0.2em] uppercase mb-3"
-            style={{ color: "oklch(0.62 0.17 45)", fontFamily: "'Noto Sans JP', sans-serif" }}
-          >
-            News
-          </p>
-          <h2
-            className="text-3xl md:text-4xl font-bold"
-            style={{
-              fontFamily: "'Noto Serif JP', serif",
-              color: "oklch(0.22 0.02 50)"
-            }}
-          >
-            新着お知らせ
-          </h2>
-        </div>
-
-        {/* Notices List */}
-        <div className="space-y-4 max-w-3xl">
-          {NOTICES.map((notice, index) => (
-            <div
-              key={index}
-              className="p-4 md:p-6 rounded-lg bg-white hover:shadow-md transition-shadow duration-200"
-            >
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 md:gap-6">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span
-                      className="text-xs font-semibold px-2.5 py-1 rounded-full"
-                      style={{
-                        background: "oklch(0.97 0.01 80)",
-                        color: "oklch(0.62 0.17 45)",
-                        fontFamily: "'Noto Sans JP', sans-serif"
-                      }}
-                    >
-                      {notice.category}
-                    </span>
-                    <span
-                      className="text-xs text-stone-400"
-                      style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
-                    >
-                      {notice.date}
-                    </span>
-                  </div>
-                  <p
-                    className="text-base font-medium text-stone-800"
-                    style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
-                  >
-                    {notice.title}
-                  </p>
-                </div>
-                <ChevronRight
-                  size={20}
-                  className="flex-shrink-0 text-stone-300 mt-2 md:mt-0"
+            {/* Right: Image */}
+            <div className={`transition-all duration-1000 ${
+              inView.about ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+            }`}>
+              <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+                <img
+                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=500&fit=crop"
+                  alt="Community"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Members Section */}
+      <section
+        ref={membersRef}
+        id="members"
+        className="py-20 bg-white"
+      >
+        <div className="container mx-auto px-4">
+          <div className={`mb-12 transition-all duration-1000 ${
+            inView.members ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
+            <div className="w-1 h-12 bg-orange-600 mb-6"></div>
+            <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">
+              コミュニティメンバー
+            </h2>
+            <p className="text-lg text-gray-600">
+              個性や強みを活かして活動するメンバーたちをご紹介します。
+            </p>
+          </div>
+
+          {/* Members Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {MEMBERS.map((member, idx) => (
+              <div
+                key={member.id}
+                className={`transition-all duration-1000 ${
+                  inView.members
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
+                }`}
+                style={{ transitionDelay: `${idx * 100}ms` }}
+              >
+                <MemberCard member={member} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Events Section */}
+      <section
+        ref={eventsRef}
+        id="events"
+        className="py-20 bg-gradient-to-b from-orange-50 to-white"
+      >
+        <div className="container mx-auto px-4">
+          <div className={`mb-12 transition-all duration-1000 ${
+            inView.events ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
+            <div className="w-1 h-12 bg-orange-600 mb-6"></div>
+            <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">
+              コミュニティイベント
+            </h2>
+            <p className="text-lg text-gray-600">
+              メンバーが主催・参加するイベント。交流、フィットネス、ビューティー、クリエイティブなど様々なジャンルがあります。
+            </p>
+          </div>
+
+          {/* Events Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {EVENTS.map((event, idx) => (
+              <a
+                key={event.id}
+                href={`/qarat-community/events/${event.id}`}
+                className={`group block transition-all duration-1000 ${
+                  inView.events
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
+                }`}
+                style={{ transitionDelay: `${idx * 100}ms` }}
+              >
+                <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                  {/* Event Image */}
+                  <div className="relative h-48 overflow-hidden bg-gray-200">
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                  </div>
+
+                  {/* Event Info */}
+                  <div className="p-5">
+                    <div className="flex items-start justify-between mb-3">
+                      <h3 className="text-lg font-serif font-bold text-gray-900">
+                        {event.title}
+                      </h3>
+                      <span className="inline-block px-3 py-1 bg-orange-100 text-orange-700 text-xs rounded-full ml-2">
+                        {event.category}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600 mb-4">
+                      {event.description}
+                    </p>
+                    <div className="text-sm text-gray-500">
+                      <p>定員: {event.capacity}</p>
+                      <p>開催: {event.schedule}</p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* News Section */}
+      <section
+        ref={newsRef}
+        id="news"
+        className="py-20 bg-white"
+      >
+        <div className="container mx-auto px-4">
+          <div className={`mb-12 transition-all duration-1000 ${
+            inView.news ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
+            <div className="w-1 h-12 bg-orange-600 mb-6"></div>
+            <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">
+              お知らせ
+            </h2>
+          </div>
+
+          {/* News List */}
+          <div className="max-w-2xl space-y-4">
+            {NOTICES.map((notice, idx) => (
+              <div
+                key={notice.id}
+                className={`p-5 border-l-4 border-orange-600 bg-orange-50 rounded transition-all duration-1000 ${
+                  inView.news
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 -translate-x-10"
+                }`}
+                style={{ transitionDelay: `${idx * 100}ms` }}
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-sm font-medium text-gray-500">
+                        {notice.date}
+                      </span>
+                      <span className="inline-block px-2 py-1 bg-orange-200 text-orange-700 text-xs rounded">
+                        {notice.category}
+                      </span>
+                      {notice.isNew && (
+                        <span className="inline-block px-2 py-1 bg-red-500 text-white text-xs rounded font-bold">
+                          NEW
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-lg font-medium text-gray-900">
+                      {notice.title}
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-orange-600 to-orange-500 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl font-serif font-bold mb-6">
+            QARATコミュニティに参加しませんか？
+          </h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            イベントに参加したり、メンバーのサービスを利用したり、新しい仲間と繋がりましょう。
+          </p>
+          <div className="flex gap-4 justify-center">
+            <a
+              href="#events"
+              className="px-8 py-3 bg-white text-orange-600 rounded-lg font-medium hover:bg-gray-100 transition-colors"
+            >
+              イベントに参加
+            </a>
+            <a
+              href="#members"
+              className="px-8 py-3 bg-orange-700 text-white rounded-lg font-medium hover:bg-orange-800 transition-colors border border-white/30"
+            >
+              メンバーを見る
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
