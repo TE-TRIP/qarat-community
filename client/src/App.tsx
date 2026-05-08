@@ -14,6 +14,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import EventDetail from "./pages/EventDetail";
 import EventsList from "./pages/EventsList";
+import MembersList from "./pages/MembersList";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
@@ -25,6 +26,7 @@ function AppRouter() {
         <Route path="/" component={Home} />
         <Route path="/events/:id" component={EventDetail} />
         <Route path="/events" component={EventsList} />
+        <Route path="/members" component={MembersList} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
       </Switch>
