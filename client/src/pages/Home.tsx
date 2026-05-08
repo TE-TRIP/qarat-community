@@ -74,13 +74,13 @@ export default function Home() {
               inView.hero ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}>
               <a
-                href="#members"
+                href="#/members"
                 className="px-8 py-3 bg-orange-600 text-white rounded-lg font-medium hover:bg-orange-700 transition-colors"
               >
                 メンバーを見る
               </a>
               <a
-                href="#events"
+                href="#/events"
                 className="px-8 py-3 bg-white/20 text-white rounded-lg font-medium hover:bg-white/30 transition-colors border border-white/30"
               >
                 イベント一覧
